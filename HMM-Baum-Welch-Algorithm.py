@@ -30,14 +30,20 @@ end_probs = [1, 1]
 # pi 파이1=0.6 파이2=0.4
 start_probs = [0.6, 0.4]
 
+# 합이 1인 랜덤(난수) 행렬  p.247 : 이들이 확률이기 때문에 합이 1이 되는 조건을 지켜야한다.
+def random_func(column,raw):
+    reference = np.random.uniform(low=0, high=1.0, size=(column,raw - 1)) 
+    reference.sort(axis = 1) 
+    diffs = np.diff(reference, prepend=0, append=1, axis=1) 
+    return diffs
 
 #function to find forward probabilities
 # 전방 변수 알파 (7.13) (7.14)
 def forward_probs():
     # node values stored during forward algorithm
     # A 상태전이 확률
-    alpha = np.zeros((len(states), len(test_sequence)))
-
+    # alpha = np.zeros((len(states), len(test_sequence)))
+    alpha = random_func(len(states), len(test_sequence))
     for t, sequence_val in enumerate(test_sequence):
         for i in range(len(states)):
             # if first sequence value then do this
@@ -60,8 +66,8 @@ def forward_probs():
 # 후방변수 베타 (7.24) (7.25)
 def backward_probs():
     # node values stored during forward algorithm
-    Beta = np.zeros((len(states), len(test_sequence)))
-
+    #Beta = np.zeros((len(states), len(test_sequence)))
+    Beta = random_func(len(states), len(test_sequence))
     #for i, sequence_val in enumerate(test_sequence):
     for t in range(1,len(test_sequence)+1):
         for i in range(len(states)):
@@ -96,8 +102,8 @@ def si_probs(forward, backward, forward_val):
 # 감마 γ (7.22)
 def gamma_probs(forward, backward, forward_val):
 
-    gamma_probabilities = np.zeros((len(states), len(test_sequence)))
-
+    #gamma_probabilities = np.zeros((len(states), len(test_sequence)))
+    gamma_probabilities= random_func(len(states), len(test_sequence))
     for t in range(len(test_sequence)):
         for i in range(len(states)):
             #gamma_probabilities[i,t] = ( forward[i,t] * backward[i,t] * emission[i,sequence_syms[test_sequence[t]]] ) / forward_val
@@ -106,12 +112,7 @@ def gamma_probs(forward, backward, forward_val):
     return gamma_probabilities
 
 
-# 합이 1인 랜덤(난수) 행렬  p.247 : 이들이 확률이기 때문에 합이 1ㅇ 되는 조건을 지켜야한다.
-def random_func(column,raw):
-    reference = np.random.uniform(low=0, high=1.0, size=(column,raw - 1)) 
-    reference.sort(axis = 1) 
-    diffs = np.diff(reference, prepend=0, append=1, axis=1) 
-    return diffs
+
 
 
 #performing iterations until convergence

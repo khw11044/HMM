@@ -24,3 +24,10 @@ hidden Markov model 파이썬 구현
 ## random_matrix.py
 
 >행렬 요소들의 합이 1이되게하는 난수 행렬 생성 코드
+
+
+---
+## Reference
+
+> [https://medium.com/@kangeugine/hidden-markov-model-7681c22f5b9](https://medium.com/@kangeugine/hidden-markov-model-7681c22f5b9)
+> [https://github.com/hamzarawal/HMM-Baum-Welch-Algorithm](https://github.com/hamzarawal/HMM-Baum-Welch-Algorithm)
